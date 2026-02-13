@@ -2,6 +2,7 @@ import { Router } from "express";
 import { authorizeRoles } from "../../middlewares/role.middleware.js";
 import {
     bulkUpdateHandler,
+  getTaskByIdHandler,
   getTaskHandler,
   partialUpdateHandler,
   reassignTaskHandler,
@@ -21,6 +22,7 @@ taskRouter.get("/", (req, res) => {
 taskRouter.post("/create", authorizeRoles("admin"), taskCreateHandler);
 
 taskRouter.get("/get-all", getTaskHandler);
+taskRouter.get("/getTask/:id", getTaskByIdHandler);
 
 taskRouter.patch(
   "/update/:taskId",

@@ -1,7 +1,12 @@
 import ApiError from "../../utils/apiError.js";
 import asyncHandler from "../../utils/asyncHandler.js";
 import Task from "./task.model.js";
-import { createTask, deleteComment, deleteTask, getAllTasks } from "./task.service.js";
+import {
+  createTask,
+  deleteComment,
+  deleteTask,
+  getAllTasks,
+} from "./task.service.js";
 
 const taskCreateHandler = asyncHandler(async (req, res, next) => {
   const { title, description, priority, assignedUser, dueDate } = req.body;
@@ -32,7 +37,7 @@ const getTaskHandler = asyncHandler(async (req, res, next) => {
   if (priority) filter.priority = priority;
   if (assignedUser) filter.assignedUser = assignedUser;
 
-  const tasks = await getAllTasks(filter,page,limit)
+  const tasks = await getAllTasks(filter, page, limit);
 
   const total = await Task.countDocuments(filter);
 
@@ -48,6 +53,30 @@ const getTaskHandler = asyncHandler(async (req, res, next) => {
   });
 });
 
+const getTaskByIdHandler = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+
+  const task = await Task.findOne({
+    _id: id,
+    isDeleted: false,
+  })
+    .populate("assignedUser")
+    .populate("createdBy")
+    .populate("comments.createdBy", "name email");
+
+  if (!task) {
+    return res.status(404).json({
+      success: false,
+      message: "Task not found",
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    task,
+  });
+});
+
 const softDeleteHandler = asyncHandler(async (req, res, next) => {
   const { taskId } = req.params;
 
@@ -55,7 +84,7 @@ const softDeleteHandler = asyncHandler(async (req, res, next) => {
     throw new ApiError(400, "task id invalid id must be 24 characters");
   }
 
-  const task = await deleteTask(taskId)
+  const task = await deleteTask(taskId);
 
   console.log("delete task is ==>", task);
   res.status(200).json({
@@ -71,7 +100,7 @@ const removeCommentHandler = asyncHandler(async (req, res, next) => {
     throw new ApiError(400, "task id invalid id must be 24 characters");
   }
 
-  const task = await deleteComment(taskId,commentId)
+  const task = await deleteComment(taskId, commentId);
 
   if (!task) {
     throw new ApiError(404, "Task not found");
@@ -202,7 +231,7 @@ const bulkUpdateHandler = asyncHandler(async (req, res, next) => {
       $inc: { updateCounter: 1 },
     },
   );
-  console.log("result of bulk update",result)
+  console.log("result of bulk update", result);
 
   res.status(200).json({
     success: true,
@@ -220,4 +249,5 @@ export {
   updateFullTaskHandler,
   partialUpdateHandler,
   bulkUpdateHandler,
+  getTaskByIdHandler,
 };

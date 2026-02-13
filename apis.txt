@@ -1,12 +1,13 @@
-register user =>POST: http://localhost:3000/api/auth/register
-login user =>POST: http://localhost:3000/api/auth/login
+register user =>POST: http://localhost:5000/api/auth/register
+login user =>POST: http://localhost:5000/api/auth/login
 
-create task =>POST: http://localhost:3000/api/task/create
-getall task =>GET: http://localhost:3000/api/task/get-all?status=pending?assignedUser=698de01c998d4003013bcdcf
-soft delete =>DELETE: http://localhost:3000/api/task/delete/{taskId}
-remove comment =>DELETE: http://localhost:3000/api/task/comment/{taskId}/{commentId}
-update status =>PATCH: localhost:3000/api/task/update/status/{taskId}
-reassin user =>PATCH: localhost:3000/api/task/reassign/{taskId}
-update fulltask =>PATCH localhost:3000/api/task/update/{taskId}
+create task =>POST: http://localhost:5000/api/task/create
+getall task =>GET: http://localhost:5000/api/task/get-all?status=pending?assignedUser=698de01c998d4003013bcdcf
+soft delete =>DELETE: http://localhost:5000/api/task/delete/{taskId}
+remove comment =>DELETE: http://localhost:5000/api/task/comment/{taskId}/{commentId}
+update status =>PATCH: localhost:5000/api/task/update/status/{taskId}
+reassin user =>PATCH: localhost:5000/api/task/reassign/{taskId}
+update fulltask =>PATCH localhost:5000/api/task/update/{taskId}
+getuser by id =>GET: http://localhost:5000/api/task/getTask/{taskId}
 
-add comment =>POST: http://localhost:3000/api/user/comment/create/{taskid}
+add comment =>POST: http://localhost:5000/api/user/comment/create/{taskid}
