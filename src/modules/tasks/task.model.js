@@ -10,14 +10,14 @@ const commentSchema = new mongoose.Schema(
     },
     createdDate: { type: Date, default: Date.now },
   },
-  { _id: false }
+  { _id: true }
 );
 
 const taskSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
 
-    description: { type: String },
+    description: { type: String},
 
     status: {
       type: String,

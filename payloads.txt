@@ -1,0 +1,16 @@
+*******user payload********
+{
+  "name":"admin",
+  "email":"admin@gmail.com",
+  "password":"12341234",
+  "role":"admin"
+}
+
+*******task payload*********
+{
+  "title":"play game",
+  "description":"playing game to test you pc",
+  "priority":"low",
+  "assignedUser":"698de01c998d4003013bcdcf",
+  "dueDate": "2026-2-20"
+}

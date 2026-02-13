@@ -30,6 +30,7 @@ const registerHandler = asyncHandler(async (req, res, next) => {
 });
 
 const loginHandler = asyncHandler(async (req, res, next) => {
+  console.log("execution comes here===========")
   const { email, password } = req.body;
 
   const user = await isUserExist(email);

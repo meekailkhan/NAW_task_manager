@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { authMiddleware } from "../../middlewares/auth.middleware.js";
 import { authorizeRoles } from "../../middlewares/role.middleware.js";
+import { addCommentHandler } from "./user.controller.js";
 
 const userRouter = Router();
 
@@ -8,8 +8,11 @@ userRouter.get("/",(req,res)=>{
     res.send("say hello to user")
 })
 
-userRouter.get("/adminroute",authorizeRoles("user"),(req,res)=>{
-    res.send("congrats role base auth authmiddleware works propperly")
+userRouter.get("/adminroute",authorizeRoles("admin"),(req,res)=>{
+    res.send("hello world this route only admin can access")
 })
+
+userRouter.post("/comment/create/:taskId",addCommentHandler)
+
 
 export default userRouter

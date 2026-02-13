@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 
 const authMiddleware = asyncHandler(async (req, res, next) => {
   let token;
-  console.log("headers is ====>",req.headers.authorization)
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
@@ -17,7 +17,7 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
   }
 
   if (!token) {
-    throw new ApiError();
+    throw new ApiError(401,"Please provide a token");
   }
   try {
     const decode = jwt.verify(token, env.JWT_SECRET);
